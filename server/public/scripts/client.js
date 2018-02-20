@@ -1,17 +1,17 @@
 $(document).ready(function(){
     console.log('in jQ');
     getOwners();
-    
+
     $('#registerBtn').on('click', function(e){
         e.preventDefault();
         packageOwner();
     }); // END registrationBtn onclick
-    
+
     $('#addPetBtn').on('click', function(e){
         e.preventDefault();
         packagePet();
     }) // END addPetBtn onclick
-    
+
 }); // END document.ready
 
 // package owner info
@@ -27,7 +27,7 @@ function packageOwner(){
 // POST owner info
 function sendOwner(owner) {
     console.log('in sendOwner');
-    
+
     $.ajax({
         type: 'POST',
         url: '/pet_hotel',
@@ -41,13 +41,13 @@ function sendOwner(owner) {
 }; // END sendOwner
 
 
-function packagePet(){    
+function packagePet(){
     let pet={
         owner_id: $('#ownerSelect').val(),
         name: $('#petNameIn').val(),
         color: $('#colorIn').val(),
         breed: $('#breedIn').val()
-    }    
+    }
     sendPet(pet);
 }
 
@@ -58,7 +58,7 @@ function sendPet(newPet){
         data: newPet
     }).done(function(response){
         //get all pets
-        console.log(response); 
+        console.log(response);
     }).fail(function(error){
         console.log(error);
     }); //END ajax POST /add

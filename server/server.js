@@ -7,8 +7,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
 //Require Router
-const koalaRouter = require('./routers/registration');
-app.use('/koalas', koalaRouter);
+const petRouter = require('./routes/petRouter');
+app.use('/pets', petRouter);
 
 // Start listening for requests on a specific port
 app.listen(port, function(){

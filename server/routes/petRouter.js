@@ -72,5 +72,20 @@ router.delete('/delete/:id', (request, response) =>{
     })
 }); // END router /delete/:id DELETE
 
+router.put('/:id', function(req, res){
+    let editedPet = req.body;
+    let id=req.params.id;
+    const sqlText = `UPDATE pets set name=$1, breed=$2, color=$3 WHERE pets.id=$4;`
+    pool.query(sqlText,[editedPet.name, editedPet.breed, editedPet.color, id])
+    .then((result)=> {
+        console.log('Edited!', result);
+        res.sendStatus(200);
+      })
+      .catch((error)=> {
+        console.log('info edited',error);
+        res.sendStatus(500);
+      })
+})
+
 
 module.exports = router;

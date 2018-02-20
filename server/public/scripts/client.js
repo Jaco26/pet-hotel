@@ -19,6 +19,7 @@ $(document).ready(function(){
     }); // EMD deleteBtn onclick
 
     $('#pet-display').on('click', '.updateBtn', updateButtonClicked);
+    $('#pet-display').on('click', '.goBtn', packageEdit);
 
 }); // END document.ready
 
@@ -102,10 +103,10 @@ function displayInfo(petInfo) {
     for (let i=0; i<petInfo.length; i++){
         let pet = petInfo[i];
         stringToAppend += `<tr><td>${pet.first_name} ${pet.last_name}</td>
-        <td><div class="column${pet.id}">${pet.name}</div><input class="hiddenColumn${pet.id} hidden" type="text" value="${pet.name}" data-id="${pet.id}"></td>
-        <td><div class="column${pet.id}">${pet.breed}</div><input class="hiddenColumn${pet.id} hidden" type="text" value="${pet.breed}" data-id="${pet.id}"></td>
-        <td><div class="column${pet.id}">${pet.color}</div><input class="hiddenColumn${pet.id} hidden" type="text" value="${pet.color}" data-id="${pet.id}"></td>
-        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="updateBtn">Update</button></div><button class="hiddenColumn${pet.id} hidden" data-id="${pet.id}" class="goBtn">Go</button></td>
+        <td><div class="column${pet.id}">${pet.name}</div><input id="name${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.name}" data-id="${pet.id}"></td>
+        <td><div class="column${pet.id}">${pet.breed}</div><input id="breed${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.breed}" data-id="${pet.id}"></td>
+        <td><div class="column${pet.id}">${pet.color}</div><input id="color${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.color}" data-id="${pet.id}"></td>
+        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="updateBtn">Update</button></div><button class="hiddenColumn${pet.id} hidden goBtn" data-id="${pet.id}">Go</button></td>
         <td><button data-id="${pet.id}" class="deleteBtn">Delete</button></td>
         <td><div class="column${pet.id}"><button data-id="${pet.id}" class="checkInBtn">Check In</button></div>
         <button data-id="${pet.id}" class="checkOutBtn hidden">Check Out</button></td></tr>`;
@@ -117,6 +118,34 @@ function updateButtonClicked(){
     let id = $(this).data('id');
     $(`.column${id}`).addClass("hidden");
     $(`.hiddenColumn${id}`).removeClass("hidden");
+}
+
+function packageEdit(){
+    let id = $(this).data('id');
+    let editPet = {
+        name: $(`#name${id}`).val(),
+        breed: $(`#breed${id}`).val(),
+        color: $(`#color${id}`).val()
+    }
+    console.log($(this));
+    
+    goButtonClicked(editPet, id);
+}
+
+function goButtonClicked(editPet, id){
+    console.log('go button clicked!');
+    console.log('edit pet:', editPet);
+
+    $.ajax ({
+        type: 'PUT',
+        url: `/pet_hotel/${id}`,
+        data: editPet
+    }).done (function(response){
+        console.log(response);
+        getAllPets();
+    }).fail(function(error){
+        console.log(error);    
+    })
 }
 
 function getAllPets(){

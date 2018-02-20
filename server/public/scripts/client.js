@@ -18,6 +18,8 @@ $(document).ready(function(){
         deleteInfo(id);
     }); // EMD deleteBtn onclick
 
+    $('#pet-display').on('click', '.updateBtn', updateButtonClicked);
+
 }); // END document.ready
 
 // package owner info
@@ -97,18 +99,25 @@ function appendOwnersToSelect(listOfOwners){
 function displayInfo(petInfo) {
     $('#pet-display').empty();
     let stringToAppend;
-    for (let pet of petInfo){
+    for (let i=0; i<petInfo.length; i++){
+        let pet = petInfo[i];
         stringToAppend += `<tr><td>${pet.first_name} ${pet.last_name}</td>
-        <td>${pet.name}</td><td>${pet.breed}</td><td>${pet.color}</td>
-        <td><button data-id="${pet.id}" class="updateBtn">Update</button></td>
+        <td><div class="column${pet.id}">${pet.name}</div><input class="hiddenColumn${pet.id} hidden" type="text" value="${pet.name}" data-id="${pet.id}"></td>
+        <td><div class="column${pet.id}">${pet.breed}</div><input class="hiddenColumn${pet.id} hidden" type="text" value="${pet.breed}" data-id="${pet.id}"></td>
+        <td><div class="column${pet.id}">${pet.color}</div><input class="hiddenColumn${pet.id} hidden" type="text" value="${pet.color}" data-id="${pet.id}"></td>
+        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="updateBtn">Update</button></div><button class="hiddenColumn${pet.id} hidden" data-id="${pet.id}" class="goBtn">Go</button></td>
         <td><button data-id="${pet.id}" class="deleteBtn">Delete</button></td>
-        <td><button data-id="${pet.id}" class="checkInBtn">Check In</button>
-        <button data-id="${pet.id}" class="checkOutBtn">Check Out</button></td></tr>`;
+        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="checkInBtn">Check In</button></div>
+        <button data-id="${pet.id}" class="checkOutBtn hidden">Check Out</button></td></tr>`;
     }
     $('#pet-display').append(stringToAppend);
 }; // END displayInfo
 
-
+function updateButtonClicked(){
+    let id = $(this).data('id');
+    $(`.column${id}`).addClass("hidden");
+    $(`.hiddenColumn${id}`).removeClass("hidden");
+}
 
 function getAllPets(){
     $.ajax({

@@ -44,7 +44,7 @@ router.post('/add', function(req, res){
 
 
 router.get('/pets', function(req, res) {
-    const sqlText = `SELECT * FROM pets JOIN owners ON pets.owner_id = owners.id ORDER BY pets.id LIMIT 50;`;
+    const sqlText = `SELECT name, breed, color, owner_id, first_name, last_name, pets.id FROM pets JOIN owners ON pets.owner_id = owners.id ORDER BY pets.id LIMIT 50;`;
     pool.query(sqlText)
     .then(function(response) {
         res.send(response.rows);

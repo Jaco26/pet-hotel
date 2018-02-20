@@ -85,3 +85,22 @@ function appendOwnersToSelect(listOfOwners){
     }
     $('#ownerSelect').append(stringToAppend);
 }
+
+
+
+// This funciton will...
+// - append to table: 
+//  - ownername (first, last)
+//  - Pet name
+//  - Pet breed
+//  - pet color
+//  - update button column
+//  - delete button column
+//  - checkin/out
+function displayInfo(petInfo) {
+    let stringToAppend;
+    for (let pet of petInfo){
+        stringToAppend += `<tr><td>${pet.first_name} ${pet.last_name}</td>
+        <td>${pet.name}</td>  `
+    }
+}; // END displayInfo

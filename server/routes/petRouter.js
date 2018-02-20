@@ -28,6 +28,21 @@ router.get('/', function(req, res) {
     }); // END pool.query
 }); // END router /pet_hotel GET
 
+router.post('/add', function(req, res){
+    const petToAdd = req.body;
+    console.log('petToAdd:', petToAdd);
+    
+    const sqlText = `INSERT INTO pets (name, color, breed, owner_id) VALUES ($1, $2, $3, $4)`;
+    pool.query(sqlText,[petToAdd.name, petToAdd.color, petToAdd.breed, petToAdd.owner_id])
+    .then(function(response){
+        res.sendStatus(201);
+        console.log(response);
+    }).catch(function(error){
+        res.sendStatus(500);
+        console.log('error on add pet post:',error);
+    })
+})//End router /add POST
+
 
 
 

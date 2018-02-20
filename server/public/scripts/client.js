@@ -6,12 +6,11 @@ $(document).ready(function(){
         e.preventDefault();
         packageOwner();
     }); // END registrationBtn onclick
-    /*
-    $('#addPetButton').on('click', function(e){
+    
+    $('#addPetBtn').on('click', function(e){
         e.preventDefault();
-        sendPet();
+        packagePet();
     }) // END addPetBtn onclick
-    */
     
 }); // END document.ready
 
@@ -41,21 +40,30 @@ function sendOwner(owner) {
     }); // END ajax POST
 }; // END sendOwner
 
-/*
-function packagePet(){
+
+function packagePet(){    
     let pet={
-        
-    }
+        owner_id: $('#ownerSelect').val(),
+        name: $('#petNameIn').val(),
+        color: $('#colorIn').val(),
+        breed: $('#breedIn').val()
+    }    
+    sendPet(pet);
 }
 
-function sendPet(){
+function sendPet(newPet){
     $.ajax({
         type:'POST',
         url:'/pet_hotel/add',
-
-    })
+        data: newPet
+    }).done(function(response){
+        //get all pets
+        console.log(response); 
+    }).fail(function(error){
+        console.log(error);
+    }); //END ajax POST /add
 }
-*/
+
 
 function getOwners(){
     $.ajax({
@@ -70,10 +78,10 @@ function getOwners(){
 }
 
 function appendOwnersToSelect(listOfOwners){
-    $('#ownerSelect').empty();
+   $('#ownerSelect').empty();
     let stringToAppend;
     for (owner of listOfOwners){
-        stringToAppend += `<option>${owner.first_name} ${owner.last_name}</option>`
+        stringToAppend += `<option value="${owner.id}">${owner.first_name} ${owner.last_name}</option>`
     }
     $('#ownerSelect').append(stringToAppend);
 }

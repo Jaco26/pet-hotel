@@ -68,7 +68,7 @@ function sendPet(newPet){
 function getOwners(){
     $.ajax({
         type: 'GET',
-        url: '/pet_hotel',
+        url: '/pet_hotel/owners',
     }).done(function(response) {
         console.log(response);
         appendOwnersToSelect(response);
@@ -88,6 +88,7 @@ function appendOwnersToSelect(listOfOwners){
 
 
 
+
 // This funciton will...
 // - append to table: 
 //  - ownername (first, last)
@@ -104,3 +105,16 @@ function displayInfo(petInfo) {
         <td>${pet.name}</td>git   `
     }
 }; // END displayInfo
+
+function getAllPets(){
+    $.ajax({
+        type: 'GET',
+        url: '/pet_hotel/pets',
+    }).done(function(response) {
+        console.log(response);
+        appendOwnersToSelect(response);
+    }).fail(function(error) {
+        console.log(error);
+    }); // END ajax GET
+};
+

@@ -14,7 +14,19 @@ router.post('/', function(req, res) {
         console.log(error);
         res.sendStatus(500); 
     }); // END pool.query
-}); // END router /pets POST
+}); // END router /pet_hotel POST
+
+router.get('/', function(req, res) {
+    const sqlText = `SELECT * FROM owners ORDER BY id LIMIT 50`;
+    pool.query(sqlText)
+    .then(function(response) {
+        res.send(response.rows);
+        console.log(response);
+    }).catch(function(error) {
+        console.log(error);
+        res.sendStatus(500); 
+    }); // END pool.query
+}); // END router /pet_hotel GET
 
 
 

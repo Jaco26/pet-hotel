@@ -7,6 +7,7 @@
     <title>Pet Hotel</title>
     <script src="vendors/jquery-3.3.1.min.js"></script>
     <script src="scripts/client.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
@@ -30,6 +31,22 @@
         <button id="addPetBtn">Add Pet</button>
         </form>
     </section>
-    
+    <!-- END #pet-registration -->
+    <section id="pet-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Owner</th>
+                    <th>Pet</th>
+                    <th>Breed</th>
+                    <th>Color</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                    <th>Check In/Out</th>
+                </tr>
+            </thead>
+            <tbody id="pet-display"></tbody> <!-- Insert table info here -->
+        </table>
+    </section>
 </body>
 </html>

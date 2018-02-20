@@ -1,6 +1,7 @@
 $(document).ready(function(){
     console.log('in jQ');
     getOwners();
+    getAllPets();
 
     $('#registerBtn').on('click', function(e){
         e.preventDefault();
@@ -11,6 +12,11 @@ $(document).ready(function(){
         e.preventDefault();
         packagePet();
     }) // END addPetBtn onclick
+
+    $('#pet-display').on('click', '.deleteBtn', function(){
+        let id = $(this).data('id');
+        deleteInfo(id);
+    }); // EMD deleteBtn onclick
 
 }); // END document.ready
 
@@ -58,6 +64,7 @@ function sendPet(newPet){
         data: newPet
     }).done(function(response){
         //get all pets
+        getAllPets();
         console.log(response);
     }).fail(function(error){
         console.log(error);
@@ -87,24 +94,21 @@ function appendOwnersToSelect(listOfOwners){
 }
 
 
-
-
-// This funciton will...
-// - append to table: 
-//  - ownername (first, last)
-//  - Pet name
-//  - Pet breed
-//  - pet color
-//  - update button column
-//  - delete button column
-//  - checkin/out
 function displayInfo(petInfo) {
+    $('#pet-display').empty();
     let stringToAppend;
     for (let pet of petInfo){
         stringToAppend += `<tr><td>${pet.first_name} ${pet.last_name}</td>
-        <td>${pet.name}</td>git   `
+        <td>${pet.name}</td><td>${pet.breed}</td><td>${pet.color}</td>
+        <td><button data-id="${pet.id}" class="updateBtn">Update</button></td>
+        <td><button data-id="${pet.id}" class="deleteBtn">Delete</button></td>
+        <td><button data-id="${pet.id}" class="checkInBtn">Check In</button>
+        <button data-id="${pet.id}" class="checkOutBtn">Check Out</button></td></tr>`;
     }
+    $('#pet-display').append(stringToAppend);
 }; // END displayInfo
+
+
 
 function getAllPets(){
     $.ajax({
@@ -112,9 +116,10 @@ function getAllPets(){
         url: '/pet_hotel/pets',
     }).done(function(response) {
         console.log(response);
-        appendOwnersToSelect(response);
+        displayInfo(response);
     }).fail(function(error) {
         console.log(error);
     }); // END ajax GET
 };
+
 

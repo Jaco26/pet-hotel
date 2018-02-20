@@ -31,7 +31,6 @@ router.get('/owners', function(req, res) {
 router.post('/add', function(req, res){
     const petToAdd = req.body;
     console.log('petToAdd:', petToAdd);
-
     const sqlText = `INSERT INTO pets (name, color, breed, owner_id) VALUES ($1, $2, $3, $4)`;
     pool.query(sqlText,[petToAdd.name, petToAdd.color, petToAdd.breed, petToAdd.owner_id])
     .then(function(response){
@@ -42,6 +41,8 @@ router.post('/add', function(req, res){
         console.log('error on add pet post:',error);
     })
 })//End router /add POST
+
+
 router.get('/pets', function(req, res) {
     const sqlText = `SELECT * FROM pets JOIN owners ON pets.owner_id = owners.id ORDER BY pets.id LIMIT 50;`;
     pool.query(sqlText)

@@ -54,6 +54,20 @@ router.get('/pets', function(req, res) {
     }); // END pool.query
 }); // END router /pet_hotel GET
 
-
+//Delete Button
+router.delete('delete/:id', request, response) =>{
+  const id = request.params.id;
+  const sqlText = `DELETE FROM koalas WHERE id=$1`;
+  pool.query(sqlText, [id])
+    .then((result)=> {
+      console.log('Delete!', result);
+      response.sendStatus(200);
+    })
+    .catch((error)=> {
+      console.log('info not deleted');
+      response.sendStatus(500);
+    })
+  })
+}
 
 module.exports = router;

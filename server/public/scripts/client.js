@@ -87,14 +87,26 @@ function appendOwnersToSelect(listOfOwners){
 }
 
 function getAllPets(){
-  $ajax({
     $.ajax({
         type: 'GET',
         url: '/pet_hotel/pets',
     }).done(function(response) {
         console.log(response);
-        appendOwnersToSelect(response);
     }).fail(function(error) {
         console.log(error);
     }); // END ajax GET
 };
+
+function deleteInfo(id){
+  $.ajax ({
+    type : 'DELETE',
+    url :`/pet_hotel/delete/${id}`,
+  })
+  .done (function( response ){
+    console.log( 'delete', response );
+
+  })// end done
+  .fail (function(){
+    console.log( 'error');
+  }) //end fail
+}

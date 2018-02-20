@@ -101,6 +101,6 @@ function displayInfo(petInfo) {
     let stringToAppend;
     for (let pet of petInfo){
         stringToAppend += `<tr><td>${pet.first_name} ${pet.last_name}</td>
-        <td>${pet.name}</td>  `
+        <td>${pet.name}</td>git   `
     }
 }; // END displayInfo

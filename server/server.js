@@ -8,7 +8,7 @@ app.use(express.static('server/public'));
 
 //Require Router
 const petRouter = require('./routes/petRouter');
-app.use('/pets', petRouter);
+app.use('/pet_hotel', petRouter);
 
 // Start listening for requests on a specific port
 app.listen(port, function(){

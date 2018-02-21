@@ -34,6 +34,7 @@ router.post('/add', function(req, res){
     const sqlText = `INSERT INTO pets (name, color, breed, owner_id) VALUES ($1, $2, $3, $4)`;
     pool.query(sqlText,[petToAdd.name, petToAdd.color, petToAdd.breed, petToAdd.owner_id])
     .then(function(response){
+        addToPetsOwners(petToAdd)
         res.sendStatus(201);
         console.log(response);
     }).catch(function(error){
@@ -114,4 +115,23 @@ router.put('/check_out/:id', function(req, res) {
 }); // END router /check_out PUT
 
 
+function addToPetsOwners(petToAdd){
+    // router.post('/pets_owners_table', (req, res))
+    const sqlText = `INSERT INTO pets_owners (pet_id, owner_id)
+    VALUES ((SELECT id FROM pets WHERE owner_id=$1), $2);`;
+    pool.query(sqlText, [petToAdd.owner_id, petToAdd.owner_id])
+    .then((response) => {
+        console.log(response);
+        //res.sendStatus(200);
+    }).catch((error) => {
+        console.log(error);
+        //res.sendStatus(500);
+    }); // END pool.query
+}; // END addToPetsOwners
+
+
+
 module.exports = router;
+
+
+

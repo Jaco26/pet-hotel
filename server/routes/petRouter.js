@@ -61,10 +61,11 @@ router.delete('/delete/:id', (request, response) =>{
   const id = request.params.id;
   console.log('id from router.delete:' , id);
   
-  const sqlText = `DELETE FROM pets WHERE id=$1`;
+    const sqlText = `DELETE FROM pets_owners WHERE pet_id=$1;`;
   pool.query(sqlText, [id])
     .then((result)=> {
       console.log('Delete!', result);
+      deleteStuff(id);
       response.sendStatus(200);
     })
     .catch((error)=> {
@@ -129,6 +130,17 @@ function addToPetsOwners(petToAdd){
     }); // END pool.query
 }; // END addToPetsOwners
 
+
+function deleteStuff(id){
+    const sqlText = 'DElETE FROM pets WHERE pets.id = $1;';
+    pool.query(sqlText, [id]).then((response) => {
+        console.log(response);
+        
+    }).catch((error) => {
+        console.log(error);
+        
+    })
+}
 
 
 module.exports = router;

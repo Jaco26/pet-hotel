@@ -87,5 +87,31 @@ router.put('/:id', function(req, res){
       })
 })
 
+router.post('/check_in', function(req, res){
+    const id = req.body.id;
+    const sqlText = `INSERT INTO visits (pet_id, check_in) VALUES ($1, now())`;
+    pool.query(sqlText,[id])
+    .then(function(response){
+        res.sendStatus(200);
+        console.log(response);
+    }).catch(function(error){
+        res.sendStatus(500);
+        console.log('error on check in pet:',error);
+    })
+})//End router /add POST
+
+router.put('/check_out/:id', function(req, res) {
+    const id = req.params.id;
+    console.log('in check_out id', id);
+    const sqlText = `UPDATE visits set check_out=NOW() WHERE pet_id=$1`;
+    pool.query(sqlText, [id])
+    .then((response) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('error in router.put /check_out:',error);
+        res.sendStatus(500);
+    }); // END pool.query
+}); // END router /check_out PUT
+
 
 module.exports = router;

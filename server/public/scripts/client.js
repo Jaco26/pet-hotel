@@ -20,6 +20,9 @@ $(document).ready(function(){
 
     $('#pet-display').on('click', '.updateBtn', updateButtonClicked);
     $('#pet-display').on('click', '.goBtn', packageEdit);
+    $('#pet-display').on('click', '.checkInBtn', checkInButtonClicked);
+
+    $('#pet-display').on('click', '.checkOutBtn', checkOutButtonClicked);
 
 }); // END document.ready
 
@@ -108,8 +111,8 @@ function displayInfo(petInfo) {
         <td><div class="column${pet.id}">${pet.color}</div><input id="color${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.color}" data-id="${pet.id}"></td>
         <td><div class="column${pet.id}"><button data-id="${pet.id}" class="updateBtn">Update</button></div><button class="hiddenColumn${pet.id} hidden goBtn" data-id="${pet.id}">Go</button></td>
         <td><button data-id="${pet.id}" class="deleteBtn">Delete</button></td>
-        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="checkInBtn">Check In</button></div>
-        <button data-id="${pet.id}" class="checkOutBtn hidden">Check Out</button></td></tr>`;
+        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="checkInBtn checkInBtn${pet.id}">Check In</button></div>
+        <button data-id="${pet.id}" class="checkOutBtn${pet.id} checkOutBtn hidden">Check Out</button></td></tr>`;
     }
     $('#pet-display').append(stringToAppend);
 }; // END displayInfo
@@ -148,6 +151,21 @@ function goButtonClicked(editPet, id){
     })
 }
 
+function checkInButtonClicked(){
+    let id=$(this).data('id');
+    $.ajax({
+        type:'POST',
+        url:'/pet_hotel/check_in',
+        data: {id: id}
+    }).done(function(response){
+        $(`.checkInBtn${id}`).addClass('hidden');
+        $(`.checkOutBtn${id}`).removeClass('hidden');
+        console.log(response);
+    }).fail(function(error){
+        console.log(error);
+    }); //END ajax POST /check_in 
+}
+
 function getAllPets(){
     $.ajax({
         type: 'GET',
@@ -175,3 +193,19 @@ function deleteInfo(id){
     console.log( 'error');
   }) //end fail
 }
+
+
+function checkOutButtonClicked() {
+    let id = $(this).data('id');
+    console.log('id in checkout button clicked', id);
+    $.ajax({
+        type: 'PUT',
+        url: `/pet_hotel/check_out/${id}`
+    }).done((response) => {
+        $(`.checkInBtn${id}`).removeClass('hidden');
+        $(`.checkOutBtn${id}`).addClass('hidden');
+    }).fail((error) => {
+        console.log(error);
+    }); // END ajax PUT
+
+}; // END checkOutButtonClicked

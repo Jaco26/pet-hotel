@@ -109,10 +109,10 @@ function displayInfo(petInfo) {
         <td><div class="column${pet.id}">${pet.name}</div><input id="name${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.name}" data-id="${pet.id}"></td>
         <td><div class="column${pet.id}">${pet.breed}</div><input id="breed${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.breed}" data-id="${pet.id}"></td>
         <td><div class="column${pet.id}">${pet.color}</div><input id="color${pet.id}" class="hiddenColumn${pet.id} hidden" type="text" value="${pet.color}" data-id="${pet.id}"></td>
-        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="updateBtn">Update</button></div><button class="hiddenColumn${pet.id} hidden goBtn" data-id="${pet.id}">Go</button></td>
-        <td><button data-id="${pet.id}" class="deleteBtn">Delete</button></td>
-        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="checkInBtn checkInBtn${pet.id}">Check In</button></div>
-        <button data-id="${pet.id}" class="checkOutBtn${pet.id} checkOutBtn hidden">Check Out</button></td></tr>`;
+        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="updateBtn btn-info">Update</button></div><button class="hiddenColumn${pet.id} hidden goBtn" data-id="${pet.id}">Go</button></td>
+        <td><button data-id="${pet.id}" class="deleteBtn btn-danger">Delete</button></td>
+        <td><div class="column${pet.id}"><button data-id="${pet.id}" class="checkInBtn checkInBtn${pet.id} btn-success">Check In</button></div>
+        <button data-id="${pet.id}" class="checkOutBtn${pet.id} checkOutBtn hidden btn-success">Check Out</button></td></tr>`;
     }
     $('#pet-display').append(stringToAppend);
 }; // END displayInfo
@@ -131,7 +131,7 @@ function packageEdit(){
         color: $(`#color${id}`).val()
     }
     console.log($(this));
-    
+
     goButtonClicked(editPet, id);
 }
 
@@ -147,7 +147,7 @@ function goButtonClicked(editPet, id){
         console.log(response);
         getAllPets();
     }).fail(function(error){
-        console.log(error);    
+        console.log(error);
     })
 }
 
@@ -163,7 +163,7 @@ function checkInButtonClicked(){
         console.log(response);
     }).fail(function(error){
         console.log(error);
-    }); //END ajax POST /check_in 
+    }); //END ajax POST /check_in
 }
 
 function getAllPets(){
